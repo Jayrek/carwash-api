@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "9JKbWmo9FLY=",
+  "dgSpecHash": "R/latYN27t0=",
   "success": true,
   "projectFilePath": "/Users/jrektabasa/Desktop/carwash-api/CarwashApi/CarwashApi.csproj",
   "expectedPackageFiles": [
@@ -23,6 +23,7 @@
     "/Users/jrektabasa/.nuget/packages/microsoft.entityframeworkcore.sqlite/10.0.5/microsoft.entityframeworkcore.sqlite.10.0.5.nupkg.sha512",
     "/Users/jrektabasa/.nuget/packages/microsoft.entityframeworkcore.sqlite.core/10.0.5/microsoft.entityframeworkcore.sqlite.core.10.0.5.nupkg.sha512",
     "/Users/jrektabasa/.nuget/packages/microsoft.entityframeworkcore.tools/10.0.5/microsoft.entityframeworkcore.tools.10.0.5.nupkg.sha512",
+    "/Users/jrektabasa/.nuget/packages/microsoft.extensions.apidescription.server/6.0.5/microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "/Users/jrektabasa/.nuget/packages/microsoft.extensions.dependencymodel/10.0.5/microsoft.extensions.dependencymodel.10.0.5.nupkg.sha512",
     "/Users/jrektabasa/.nuget/packages/microsoft.identitymodel.abstractions/8.0.1/microsoft.identitymodel.abstractions.8.0.1.nupkg.sha512",
     "/Users/jrektabasa/.nuget/packages/microsoft.identitymodel.jsonwebtokens/8.0.1/microsoft.identitymodel.jsonwebtokens.8.0.1.nupkg.sha512",
@@ -38,6 +39,10 @@
     "/Users/jrektabasa/.nuget/packages/sqlitepclraw.core/2.1.11/sqlitepclraw.core.2.1.11.nupkg.sha512",
     "/Users/jrektabasa/.nuget/packages/sqlitepclraw.lib.e_sqlite3/2.1.11/sqlitepclraw.lib.e_sqlite3.2.1.11.nupkg.sha512",
     "/Users/jrektabasa/.nuget/packages/sqlitepclraw.provider.e_sqlite3/2.1.11/sqlitepclraw.provider.e_sqlite3.2.1.11.nupkg.sha512",
+    "/Users/jrektabasa/.nuget/packages/swashbuckle.aspnetcore/7.3.2/swashbuckle.aspnetcore.7.3.2.nupkg.sha512",
+    "/Users/jrektabasa/.nuget/packages/swashbuckle.aspnetcore.swagger/7.3.2/swashbuckle.aspnetcore.swagger.7.3.2.nupkg.sha512",
+    "/Users/jrektabasa/.nuget/packages/swashbuckle.aspnetcore.swaggergen/7.3.2/swashbuckle.aspnetcore.swaggergen.7.3.2.nupkg.sha512",
+    "/Users/jrektabasa/.nuget/packages/swashbuckle.aspnetcore.swaggerui/7.3.2/swashbuckle.aspnetcore.swaggerui.7.3.2.nupkg.sha512",
     "/Users/jrektabasa/.nuget/packages/system.codedom/6.0.0/system.codedom.6.0.0.nupkg.sha512",
     "/Users/jrektabasa/.nuget/packages/system.composition/9.0.0/system.composition.9.0.0.nupkg.sha512",
     "/Users/jrektabasa/.nuget/packages/system.composition.attributedmodel/9.0.0/system.composition.attributedmodel.9.0.0.nupkg.sha512",
