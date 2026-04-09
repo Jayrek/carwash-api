@@ -87,6 +87,7 @@ public class AuthController : ControllerBase {
 
         return Ok(new AuthResponseDto {
             Token = token,
+            Id = user.Id,
             Email = user.Email,
             Role = user.Role,
             ProfileImageUrl = user.ProfileImageUrl,
