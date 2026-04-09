@@ -1,6 +1,8 @@
 using System.Text;
 using CarwashApi.Data;
 using CarwashApi.Services;
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -78,6 +80,35 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
+
+// Firebase Admin: uses GOOGLE_APPLICATION_CREDENTIALS (service account JSON path).
+{
+    var path = Environment.GetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS");
+    if (string.IsNullOrWhiteSpace(path))
+    {
+        app.Logger.LogInformation(
+            "Firebase Admin not initialized: set GOOGLE_APPLICATION_CREDENTIALS to your service account JSON path.");
+    }
+    else
+    {
+        if (!Path.IsPathRooted(path))
+            path = Path.GetFullPath(Path.Combine(app.Environment.ContentRootPath, path));
+
+        if (!File.Exists(path))
+        {
+            throw new InvalidOperationException(
+                $"Firebase credentials file not found. GOOGLE_APPLICATION_CREDENTIALS resolved to: {path}");
+        }
+
+        Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", path);
+
+        if (FirebaseApp.DefaultInstance == null)
+        {
+            FirebaseApp.Create(new AppOptions { Credential = GoogleCredential.GetApplicationDefault() });
+            app.Logger.LogInformation("Firebase Admin initialized.");
+        }
+    }
+}
 
 // Configure the HTTP request pipeline.
 app.MapOpenApi();

@@ -132,3 +132,12 @@
 /Users/jrektabasa/Desktop/carwash-api/CarwashApi/obj/Debug/net10.0/CarwashApi.pdb
 /Users/jrektabasa/Desktop/carwash-api/CarwashApi/obj/Debug/net10.0/CarwashApi.genruntimeconfig.cache
 /Users/jrektabasa/Desktop/carwash-api/CarwashApi/obj/Debug/net10.0/ref/CarwashApi.dll
+/Users/jrektabasa/Desktop/carwash-api/CarwashApi/bin/Debug/net10.0/FirebaseAdmin.dll
+/Users/jrektabasa/Desktop/carwash-api/CarwashApi/bin/Debug/net10.0/Google.Api.Gax.dll
+/Users/jrektabasa/Desktop/carwash-api/CarwashApi/bin/Debug/net10.0/Google.Api.Gax.Rest.dll
+/Users/jrektabasa/Desktop/carwash-api/CarwashApi/bin/Debug/net10.0/Google.Apis.dll
+/Users/jrektabasa/Desktop/carwash-api/CarwashApi/bin/Debug/net10.0/Google.Apis.Auth.dll
+/Users/jrektabasa/Desktop/carwash-api/CarwashApi/bin/Debug/net10.0/Google.Apis.Core.dll
+/Users/jrektabasa/Desktop/carwash-api/CarwashApi/bin/Debug/net10.0/Microsoft.Bcl.AsyncInterfaces.dll
+/Users/jrektabasa/Desktop/carwash-api/CarwashApi/bin/Debug/net10.0/System.Management.dll
+/Users/jrektabasa/Desktop/carwash-api/CarwashApi/bin/Debug/net10.0/runtimes/win/lib/net7.0/System.Management.dll
