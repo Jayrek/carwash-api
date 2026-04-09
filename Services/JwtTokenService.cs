@@ -1,9 +1,9 @@
-using CarwashApi.Models;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using CarwashApi.Models;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 
 namespace CarwashApi.Services;
 
@@ -35,6 +35,7 @@ public class JwtTokenService {
         var claims = new List<Claim> {
             new(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
             new(JwtRegisteredClaimNames.Email, user.Email),
+            new(ClaimTypes.Role, user.Role),
         };
 
         var token = new JwtSecurityToken(

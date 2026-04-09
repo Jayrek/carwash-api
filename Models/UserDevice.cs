@@ -6,7 +6,7 @@ public class UserDevice
     public Guid UserId { get; set; }
 
     public string DeviceToken { get; set; } = null!;
-    public string Platform { get; set; } = null!; // or enum
+    public DevicePlatform Platform { get; set; }
 
     public string? DeviceId { get; set; }
     public string? DeviceName { get; set; }

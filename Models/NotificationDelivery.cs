@@ -7,7 +7,7 @@ public class NotificationDelivery
     public Guid NotificationId { get; set; }
     public Guid UserDeviceId { get; set; }
 
-    public string Status { get; set; } = "pending"; // pending, sent, failed
+    public DeliveryStatus Status { get; set; } = DeliveryStatus.Pending;
     public string? Response { get; set; }
 
     public DateTime SentAt { get; set; }

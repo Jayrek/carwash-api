@@ -1,21 +1,29 @@
+using System.Security.Claims;
 using System.Text;
 using CarwashApi.Data;
+using CarwashApi.Models;
 using CarwashApi.Services;
 using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Npgsql.NameTranslation;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.OpenApi;
 using Microsoft.OpenApi;
 using CarwashApi;
 using Swashbuckle.AspNetCore.SwaggerUI;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Controllers
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApi(options => 
 {
@@ -31,11 +39,18 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 });
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("Default")));
+    options.UseNpgsql(
+        builder.Configuration.GetConnectionString("Default"),
+        npgsql =>
+        {
+            npgsql.MapEnum<DeliveryStatus>("delivery_status", "public", new NpgsqlNullNameTranslator());
+            npgsql.MapEnum<DevicePlatform>("device_platform", "public", new NpgsqlNullNameTranslator());
+        }));
 
 // Services
 builder.Services.AddScoped<PasswordService>();
 builder.Services.AddScoped<JwtTokenService>();
+builder.Services.AddScoped<IPushNotificationService, PushNotificationService>();
 
 // JWT auth
 builder.Services.AddAuthentication(options => {
@@ -58,6 +73,7 @@ builder.Services.AddAuthentication(options => {
         ValidateAudience = true,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
+        RoleClaimType = ClaimTypes.Role,
 
         ValidIssuer = issuer,
         ValidAudience = audience,

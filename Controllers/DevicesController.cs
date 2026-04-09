@@ -1,13 +1,17 @@
 using CarwashApi.Data;
 using CarwashApi.DTO.Request;
 using CarwashApi.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace CarwashApi.Controllers;
 
 [ApiController]
 [Route("api/devices")]
+[Authorize]
 public class DevicesController : ControllerBase
 {
     private readonly AppDbContext _appDbcontext;
@@ -20,7 +24,10 @@ public class DevicesController : ControllerBase
     [HttpPost("register")]
     public async Task<IActionResult> RegisterAsync(RegisterDeviceRequest request)
     {
-        var userId = Guid.Parse(User.FindFirst("sub")!.Value);
+        var sub = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? User.FindFirstValue(JwtRegisteredClaimNames.Sub);
+        if (string.IsNullOrEmpty(sub) || !Guid.TryParse(sub, out var userId)) {
+            return Unauthorized(new { message = "Unauthorized." });
+        }
 
         var existing = await _appDbcontext.UserDevices
             .FirstOrDefaultAsync(x => x.UserId == userId && x.DeviceId == request.DeviceId);
