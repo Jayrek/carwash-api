@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 namespace CarwashApi.Models;
 
 public class User {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
     [MaxLength(50)]
     public string FirstName { get; set; } = string.Empty;

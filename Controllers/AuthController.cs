@@ -43,6 +43,7 @@ public class AuthController : ControllerBase {
         var (hash, salt) = _passwordService.CreatePasswordHash(request.Password);
 
         var user = new User {
+            Id = Guid.NewGuid(),
             Email = email,
             FirstName = string.Empty,
             LastName = string.Empty,
@@ -69,8 +70,7 @@ public class AuthController : ControllerBase {
     }
 
     [HttpPost("sign-in")]
-    public async Task<ActionResult<AuthResponseDto>> SignInAsync([FromBody] SignInRequestDto request) 
-    {
+    public async Task<ActionResult<AuthResponseDto>> SignInAsync([FromBody] SignInRequestDto request) {
         var email = request.Email.Trim().ToLower();
 
         var user = await _appDbcontext.Users.FirstOrDefaultAsync(u => u.Email == email);
@@ -78,8 +78,8 @@ public class AuthController : ControllerBase {
             return Unauthorized(new { message = "Invalid email or password." });
         }
 
-        var verified = _passwordService.VerifyPassword(request.Password, user.PasswordHash, user.PasswordSalt);
-        if (!verified) {
+        var passwordMatch = _passwordService.VerifyPassword(request.Password, user.PasswordHash, user.PasswordSalt);
+        if (!passwordMatch) {
             return Unauthorized(new { message = "Invalid email or password." });
         }
 
@@ -87,11 +87,7 @@ public class AuthController : ControllerBase {
 
         return Ok(new AuthResponseDto {
             Token = token,
-            Id = user.Id,
             Email = user.Email,
-            FirstName = user.FirstName,
-            LastName = user.LastName,
-            Phone = user.Phone,
             Role = user.Role,
             ProfileImageUrl = user.ProfileImageUrl,
         });
@@ -101,7 +97,7 @@ public class AuthController : ControllerBase {
     [HttpGet("me")]
     public async Task<ActionResult<UserResponseDto>> GetMeAsync() {
         var sub = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? User.FindFirstValue(JwtRegisteredClaimNames.Sub);
-        if(string.IsNullOrEmpty(sub) || !int.TryParse(sub, out var userId)) {
+        if (string.IsNullOrEmpty(sub) || !Guid.TryParse(sub, out var userId)) {
             return Unauthorized(new { message = "Unauthorized." });
         }
 
@@ -120,10 +116,10 @@ public class AuthController : ControllerBase {
     }
 
     [Authorize]
-    [HttpGet("user/{id:int}")]
-    public async Task<ActionResult<UserResponseDto>> GetUserByIdAsync(int id) {
+    [HttpGet("user/{id:guid}")]
+    public async Task<ActionResult<UserResponseDto>> GetUserByIdAsync(Guid id) {
         var sub = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? User.FindFirstValue(JwtRegisteredClaimNames.Sub);
-        if(string.IsNullOrEmpty(sub) || !int.TryParse(sub, out var userId)) {
+        if (string.IsNullOrEmpty(sub) || !Guid.TryParse(sub, out var userId)) {
             return Unauthorized(new { message = "Unauthorized." });
         }
 
@@ -145,9 +141,8 @@ public class AuthController : ControllerBase {
     [Authorize]
     [HttpPatch("update-profile")]
     public async Task<ActionResult<AuthResponseDto>> UpdateProfileAsync([FromBody] UpdateProfileRequestDto request) {
-
         var sub = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? User.FindFirstValue(JwtRegisteredClaimNames.Sub);
-        if(string.IsNullOrEmpty(sub) || !int.TryParse(sub, out var userId)) {
+        if(string.IsNullOrEmpty(sub) || !Guid.TryParse(sub, out var userId)) {
             return Unauthorized(new { message = "Unauthorized." });
         }
        

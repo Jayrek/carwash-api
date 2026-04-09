@@ -12,21 +12,25 @@ public class AppDbContext : DbContext {
         {
             modelBuilder.Entity<User>(entity => 
             {
+                entity.ToTable("users");
+
                 entity.HasKey(u => u.Id);
 
-                entity.Property(u => u.FirstName).HasMaxLength(50).IsRequired();
-                entity.Property(u => u.LastName).HasMaxLength(50).IsRequired();
+                entity.Property(u => u.Id).HasColumnName("id");
+                entity.Property(u => u.FirstName).HasColumnName("first_name").HasMaxLength(50).IsRequired();
+                entity.Property(u => u.LastName).HasColumnName("last_name").HasMaxLength(50).IsRequired();
+                entity.Property(u => u.Email).HasColumnName("email").HasMaxLength(255).IsRequired();
                 entity.HasIndex(u => u.Email).IsUnique();
 
-                entity.Property(u => u.Phone).HasMaxLength(20);
-                entity.Property(u => u.Role).HasMaxLength(50).IsRequired();
-                entity.Property(u => u.ProfileImageUrl).HasMaxLength(2048);
-                entity.Property(u => u.IsActive).HasDefaultValue(true).IsRequired();
-                entity.Property(u => u.CreatedAt).HasDefaultValueSql("now()").IsRequired();
-                entity.Property(u => u.UpdatedAt).HasDefaultValueSql("now()");
+                entity.Property(u => u.Phone).HasColumnName("phone").HasMaxLength(20);
+                entity.Property(u => u.Role).HasColumnName("role").HasMaxLength(50).IsRequired();
+                entity.Property(u => u.ProfileImageUrl).HasColumnName("profile_image_url").HasMaxLength(2048);
+                entity.Property(u => u.IsActive).HasColumnName("is_active").HasDefaultValue(true).IsRequired();
+                entity.Property(u => u.CreatedAt).HasColumnName("created_at").HasDefaultValueSql("now()").IsRequired();
+                entity.Property(u => u.UpdatedAt).HasColumnName("updated_at").HasDefaultValueSql("now()");
 
-                entity.Property(u => u.PasswordHash).HasMaxLength(256).IsRequired();
-                entity.Property(u => u.PasswordSalt).HasMaxLength(256).IsRequired();
+                entity.Property(u => u.PasswordHash).HasColumnName("password_hash").HasMaxLength(256).IsRequired();
+                entity.Property(u => u.PasswordSalt).HasColumnName("password_salt").HasMaxLength(256).IsRequired();
             });
         }
 }
