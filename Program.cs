@@ -38,13 +38,15 @@ builder.Services.ConfigureHttpJsonOptions(options =>
     options.SerializerOptions.NumberHandling = System.Text.Json.Serialization.JsonNumberHandling.Strict;
 });
 
+// Reuse a single translator instance so EF options stay stable.
+var nameTranslator = new NpgsqlNullNameTranslator();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(
         builder.Configuration.GetConnectionString("Default"),
         npgsql =>
         {
-            npgsql.MapEnum<DeliveryStatus>("delivery_status", "public", new NpgsqlNullNameTranslator());
-            npgsql.MapEnum<DevicePlatform>("device_platform", "public", new NpgsqlNullNameTranslator());
+            npgsql.MapEnum<DeliveryStatus>("delivery_status", "public", nameTranslator);
+            npgsql.MapEnum<DevicePlatform>("device_platform", "public", nameTranslator);
         }));
 
 // Services
